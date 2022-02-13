@@ -2,35 +2,43 @@ package com.richieoscar.shopaholic.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.richieoscar.shopaholic.utils.EntityId;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class User extends EntityId {
+@Entity
+@Table(name = "app_user")
+public class AppUser {
 
+    @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     @JsonProperty
+    private Long id;
+
+
     @Column(name = "email", nullable = false, unique = true)
     @NotNull(message = "email is required")
     private String email;
 
-    @JsonProperty
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @JsonProperty
+
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @JsonProperty
     @Column(name = "password", nullable = false)
     private String password;
 

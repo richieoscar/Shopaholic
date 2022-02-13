@@ -1,8 +1,9 @@
-package com.richieoscar.shopaholic.dto;
+package com.richieoscar.shopaholic.dto.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class RegistrationRequest {
     @JsonProperty
     @NotNull(message = "email is required")
+    @Email(message = "Provide valid email")
     private String email;
 
     @JsonProperty

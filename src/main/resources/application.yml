@@ -1,16 +1,17 @@
 spring:
-
-  datasource:
-    url: jdbc:postgresql://localhost:5432/shopaholicdb
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    ddl-auto: update
     show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.format_sql: true
+  datasource:
+      url: jdbc:postgresql://localhost:5432/shopaholicdb
+      username: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+
+
 
 server:
   servlet:

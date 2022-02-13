@@ -1,24 +1,28 @@
 package com.richieoscar.shopaholic.utils;
 
-import java.util.Arrays;
+import com.richieoscar.shopaholic.exceptions.PasswordDoNotMatchException;
 
 public class PasswordValidator {
 
     public static boolean validatePassword(String password, String confirmPassword) {
+        if (passwordMatch(password, confirmPassword) && doValidate(password)) {
+            return true;
+        }
+        return false;
+    }
+
+    protected static boolean doValidate(String password) {
         if (password.length() > 8
                 && containsSpecialCharacter(password)
                 && containsDigit(password)
                 && containsDigit(password)
-                && containsUpperCase(password)
-                && paswwordMatch(password,confirmPassword)
-        ) {
+                && containsUpperCase(password)) {
             return true;
         }
         return false;
     }
 
     protected static boolean containsSpecialCharacter(String password) {
-
         if (password.contains("@") || password.contains("#") || password.contains("$")
                 || password.contains("&") || password.contains("%") ||
                 password.contains("!") || password.contains("^") || password.contains("*")) {
@@ -48,9 +52,9 @@ public class PasswordValidator {
         return false;
     }
 
-    protected static boolean paswwordMatch(String password, String confirmPassword) {
+    protected static boolean passwordMatch(String password, String confirmPassword) {
         if (password.equals(confirmPassword)) return true;
-        return false;
+        throw new PasswordDoNotMatchException();
     }
 }
 

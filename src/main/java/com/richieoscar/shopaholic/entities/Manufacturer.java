@@ -1,21 +1,31 @@
 package com.richieoscar.shopaholic.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.richieoscar.shopaholic.utils.EntityId;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "manufacturer")
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Manufacturer extends EntityId {
+@Entity
+@Table(name = "manufacturer")
+public class Manufacturer {
+
+    @Id
+    @SequenceGenerator(
+            name = "manu_sequence",
+            sequenceName = "manu_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "manu_sequence")
+    @JsonProperty
+    private Long id;
 
     @Column(name = "name", nullable = false)
     @NotNull(message = "Please provide manufacturer name")
