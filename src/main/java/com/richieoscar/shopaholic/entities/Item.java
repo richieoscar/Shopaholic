@@ -1,13 +1,12 @@
 package com.richieoscar.shopaholic.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.richieoscar.shopaholic.utils.EntityId;
-import com.richieoscar.shopaholic.entities.enums.Category;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Data
@@ -40,13 +39,11 @@ public class Item {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "category")
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @Column
+    private int quantityAvailable;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @OneToOne(targetEntity = Manufacturer.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "manufacturer_id", referencedColumnName = "id")
     private Manufacturer manufacturer;
-
 
 }

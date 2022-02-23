@@ -29,7 +29,7 @@ class UserControllerTest {
     @Test
     void register() throws Exception {
         RegistrationRequest request = new RegistrationRequest();
-        request.setEmail("oscaranyiam94@gmail.com");
+        request.setEmail("oscaranyiam100@gmail.com");
         request.setFirstName("Oscar");
         request.setLastName("Anyiam");
         request.setPassword("Passwordone@3");
@@ -58,6 +58,4 @@ class UserControllerTest {
 
         verify(service, times(1)).getUser(email);
     }
-
-
 }

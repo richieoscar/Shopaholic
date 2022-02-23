@@ -9,8 +9,16 @@ import com.richieoscar.shopaholic.exceptions.PasswordStrengthException;
 import com.richieoscar.shopaholic.service.UserService;
 import com.richieoscar.shopaholic.utils.EmailValidator;
 import com.richieoscar.shopaholic.utils.PasswordValidator;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +26,18 @@ import static com.richieoscar.shopaholic.utils.AppHelper.addHeader;
 
 @RestController
 @RequestMapping("/api/v1")
+@AllArgsConstructor
 public class UserController {
-
 
     private UserService service;
 
-    @Autowired
-    public UserController(UserService service) {
-        this.service = service;
-    }
-
+    @Operation(description = "Register a User")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Registration Successful", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE)}),
+            @ApiResponse(responseCode = "400", description = "Invalid Email"),
+            @ApiResponse(responseCode = "400", description = "Password (should contain: uppercase, special character, digit,min 8 characters, & passwords match)"),
+            @ApiResponse(responseCode = "409", description = "Email already Exists"),
+    })
     @PostMapping("/register")
     public ResponseEntity<RegistrationResponse> register(@RequestBody RegistrationRequest request) {
 

@@ -16,7 +16,7 @@ class PasswordValidatorTest {
 
     @Test
     void containsSpecialCharacter() {
-        String password = "passwordone3@";
+        String password = "passwordone3!";
         assertTrue(PasswordValidator.containsSpecialCharacter(password));
     }
 
