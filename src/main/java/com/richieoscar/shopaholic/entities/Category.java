@@ -22,11 +22,11 @@ public class Category {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
     private Long id;
-    @Column( nullable = false)
+    @Column( nullable = false, unique = true)
     private String name;
 
     @OneToMany(targetEntity = Item.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     List<Item> items;
 
     public void addItem(Item item){

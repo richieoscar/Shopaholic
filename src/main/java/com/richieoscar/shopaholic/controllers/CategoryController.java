@@ -4,6 +4,7 @@ import com.richieoscar.shopaholic.dto.requests.CategoryRequest;
 import com.richieoscar.shopaholic.dto.requests.CreateCategoryRequest;
 import com.richieoscar.shopaholic.entities.Category;
 import com.richieoscar.shopaholic.entities.Item;
+import com.richieoscar.shopaholic.exceptions.CategoryAlreadyExistException;
 import com.richieoscar.shopaholic.exceptions.CategoryNotFoundException;
 import com.richieoscar.shopaholic.exceptions.ItemNotFoundException;
 import com.richieoscar.shopaholic.repositories.CategoryRepository;
@@ -45,6 +46,11 @@ public class CategoryController {
     public Category createCategory(@RequestBody CreateCategoryRequest request) {
         Category category = new Category();
         category.setName(request.getCategoryName());
-        return categoryRepository.save(category);
+        Optional<Category> optionalCategory = categoryRepository.findByName(request.getCategoryName());
+        if (optionalCategory.isPresent()) {
+            throw new CategoryAlreadyExistException();
+        } else {
+            return categoryRepository.save(category);
+        }
     }
 }

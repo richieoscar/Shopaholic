@@ -6,17 +6,16 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "cart")
-public class Cart  extends EntityId {
+public class Cart extends EntityId {
 
     @Id
     @SequenceGenerator(
@@ -28,8 +27,8 @@ public class Cart  extends EntityId {
     @JsonProperty
     private Long id;
 
-    @Column(name = "item")
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private List<Item> items;
 
     @Column
@@ -38,4 +37,24 @@ public class Cart  extends EntityId {
 
     @OneToOne(mappedBy = "cart")
     private AppUser user;
+
+    public void addItem(Item item) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        items.add(item);
+        if(total ==null){
+            total = new BigDecimal(0);
+        }
+        total = total.add(item.getPrice());
+    }
+    public void removeItem(Item item){
+        if(items != null){
+         items.remove(item);
+        }
+        if(total != null){
+           total = total.subtract(item.getPrice());
+        }
+
+    }
 }

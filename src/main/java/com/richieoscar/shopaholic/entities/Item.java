@@ -6,7 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
 
 
 @Data
@@ -42,8 +41,7 @@ public class Item {
     @Column
     private int quantityAvailable;
 
-    @OneToOne(targetEntity = Manufacturer.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "manufacturer_id", referencedColumnName = "id")
+    @Embedded
     private Manufacturer manufacturer;
 
 }

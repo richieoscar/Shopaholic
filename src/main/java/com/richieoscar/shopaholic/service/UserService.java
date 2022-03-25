@@ -1,5 +1,6 @@
 package com.richieoscar.shopaholic.service;
 
+import com.richieoscar.shopaholic.dto.response.CartItems;
 import com.richieoscar.shopaholic.dto.response.RegistrationResponse;
 import com.richieoscar.shopaholic.dto.response.UserResponse;
 import com.richieoscar.shopaholic.entities.AppUser;
@@ -14,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -49,16 +52,20 @@ public class UserService {
     }
 
     public UserResponse getUser(String email) {
-        UserResponse userResponse = new UserResponse();
+
         Optional<AppUser> userOptional = repository.findByEmail(email);
         if (userOptional.isPresent()) {
             AppUser appUser = userOptional.get();
-            userResponse.setFirsName(appUser.getFirstName());
-            userResponse.setLastName(appUser.getLastName());
-            userResponse.setEmail(appUser.getEmail());
-            userResponse.setCart(appUser.getCart());
+            UserResponse userResponse = new UserResponse(appUser);
             return userResponse;
         } else throw new UserNotFoundExistException();
+    }
+
+    public List<UserResponse> getUsers() {
+        List<AppUser> users = repository.findAll();
+        return users.stream()
+                .map(appUser -> new UserResponse(appUser))
+                .collect(Collectors.toList());
     }
 
 }

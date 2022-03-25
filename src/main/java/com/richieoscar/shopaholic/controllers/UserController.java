@@ -4,6 +4,7 @@ import com.richieoscar.shopaholic.dto.requests.RegistrationRequest;
 import com.richieoscar.shopaholic.dto.response.RegistrationResponse;
 import com.richieoscar.shopaholic.dto.response.UserResponse;
 import com.richieoscar.shopaholic.entities.AppUser;
+import com.richieoscar.shopaholic.entities.Cart;
 import com.richieoscar.shopaholic.exceptions.EmailNotValidException;
 import com.richieoscar.shopaholic.exceptions.PasswordStrengthException;
 import com.richieoscar.shopaholic.service.UserService;
@@ -22,10 +23,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.richieoscar.shopaholic.utils.AppHelper.addHeader;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 @AllArgsConstructor
 public class UserController {
 
@@ -61,5 +64,10 @@ public class UserController {
         if (EmailValidator.validate(email)) {
             return new ResponseEntity<UserResponse>(service.getUser(email), addHeader(), HttpStatus.OK);
         } else throw new EmailNotValidException();
+    }
+
+    @GetMapping("/getUsers")
+    public ResponseEntity<List<UserResponse>> getUsers(){
+        return ResponseEntity.ok(service.getUsers());
     }
 }

@@ -1,6 +1,7 @@
 package com.richieoscar.shopaholic.controllers;
 
 import com.richieoscar.shopaholic.dto.ItemRequest;
+import com.richieoscar.shopaholic.dto.TestResponse;
 import com.richieoscar.shopaholic.entities.Item;
 import com.richieoscar.shopaholic.service.ItemService;
 import com.richieoscar.shopaholic.utils.AppHelper;
@@ -30,13 +31,13 @@ public class ItemController {
     }
 
     @GetMapping("/itemsByCategory/{category}")
-    public ResponseEntity<List<Item>> getItemsByCategory(@PathVariable("category") Long category) {
-        return new ResponseEntity<List<Item>>((List<Item>) service.findItemsByCategory(category), AppHelper.addHeader(), HttpStatus.OK);
+    public ResponseEntity<List<Item>> getItemsByCategory(@PathVariable("category") Long categoryId) {
+        return new ResponseEntity<List<Item>>((List<Item>) service.findItemsByCategory(categoryId), AppHelper.addHeader(), HttpStatus.OK);
     }
 
-    @GetMapping("/itemsByManufacturer/{manufacurer}")
-    public ResponseEntity<List<Item>> getItemsByManufacturer(@PathVariable("manufacturer") String manufacturer) {
-        return new ResponseEntity<List<Item>>((List<Item>) service.findItemsByManufacturer(manufacturer), AppHelper.addHeader(), HttpStatus.OK);
+    @GetMapping("/itemsByManufacturer/{name}")
+    public ResponseEntity<List<Item>> getItemsByManufacturer(@PathVariable("name") String name) {
+        return new ResponseEntity<List<Item>>((List<Item>) service.findItemsByManufacturer(name), AppHelper.addHeader(), HttpStatus.OK);
     }
 
 
