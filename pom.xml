@@ -84,6 +84,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>shopaholic-app</finalName>
     </build>
 
 </project>
