@@ -24,7 +24,7 @@ public class OpenApiConfig {
         info.setTermsOfService("Terms & Conditon Apply");
         info.setContact(new Contact().email("oscaranyiam94@gmail.com").name("Oscar Anyiam"));
         Server server = new Server();
-        server.url("http://localhost:8081/shopaholic");
+        server.url("http://localhost:8080/shopaholic");
         server.description("Base Url");
         openAPI.setInfo(info);
         openAPI.setServers(List.of(server));

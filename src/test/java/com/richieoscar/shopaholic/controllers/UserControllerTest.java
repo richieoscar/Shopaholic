@@ -41,7 +41,7 @@ class UserControllerTest {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         covertToJson(request);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/register")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
                         .content(covertToJson(request)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
