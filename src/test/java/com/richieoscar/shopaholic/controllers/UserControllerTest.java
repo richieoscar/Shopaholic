@@ -52,7 +52,7 @@ class UserControllerTest {
     @Test
     void getUser() throws Exception {
         String email = "oscaranyiam@gmail.com";
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/getUser/" + email))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user/getUser/" + email))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 

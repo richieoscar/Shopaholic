@@ -32,16 +32,14 @@ public class UserService {
     public RegistrationResponse registerUser(AppUser user) {
         Optional<AppUser> userExists = repository.findByEmail(user.getEmail());
         if (userExists.isPresent()) {
-            throw new EmailAlreadyExistException();
+            throw new EmailAlreadyExistException(String.format("Email: %s already exist", user.getEmail()));
         }
         try {
             repository.save(user);
 
         } catch (ConstraintViolationException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        } catch (DataIntegrityViolationException e) {
-            throw new EmailAlreadyExistException();
-        } catch (Exception e) {
+        }  catch (Exception e) {
             log.error(e.getMessage());
         }
         RegistrationResponse response = new RegistrationResponse();
@@ -56,15 +54,14 @@ public class UserService {
         Optional<AppUser> userOptional = repository.findByEmail(email);
         if (userOptional.isPresent()) {
             AppUser appUser = userOptional.get();
-            UserResponse userResponse = new UserResponse(appUser);
-            return userResponse;
+            return new UserResponse(appUser);
         } else throw new UserNotFoundExistException();
     }
 
     public List<UserResponse> getUsers() {
         List<AppUser> users = repository.findAll();
         return users.stream()
-                .map(appUser -> new UserResponse(appUser))
+                .map(UserResponse::new)
                 .collect(Collectors.toList());
     }
 
